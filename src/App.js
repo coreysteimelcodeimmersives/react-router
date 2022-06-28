@@ -1,15 +1,18 @@
-import React from "react";
+import * as React from "react";
 import "./App.css";
 import { Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home";
 import Blogs from "./pages/Blogs";
+import BlogPost from "./components/BlogPost";
 
 const App = () => {
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/blogs" element={<Blogs />} />
+        <Route path="/blogs" element={<Blogs />}>
+          <Route path=":blogId" element={<BlogPost />} />
+        </Route>
       </Routes>
     </div>
   );
