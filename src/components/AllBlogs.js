@@ -1,13 +1,13 @@
 import React from "react";
 import { Outlet, useSearchParams } from "react-router-dom";
 
-const AllBlogs = ({ blogPosts }) => {
+const AllBlogs = ({ allBlogs }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const sortOrder = searchParams.get("sortOrder") || "asc";
-  const sortField = searchParams.get("sortField") || "createdAt";
-  const limit = searchParams.get("limit") || 0;
+  const sortField = searchParams.get("sortField") || "id";
+  const limit = searchParams.get("limit") || allBlogs.length;
   const page = searchParams.get("page") || 0;
-  const blogPostsCopy = blogPosts;
+  const blogPostsCopy = allBlogs;
   const compare = (a, b) => {
     if (sortOrder.toLowerCase() === "asc") {
       if (a[sortField] < b[sortField]) {
