@@ -5,6 +5,8 @@ const AllBlogs = ({ blogPosts }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const sortOrder = searchParams.get("sortOrder") || "asc";
   const sortField = searchParams.get("sortField") || "createdAt";
+  const limit = searchParams.get("limit") || 0;
+  const page = searchParams.get("page") || 0;
   const blogPostsCopy = blogPosts;
   const compare = (a, b) => {
     if (sortOrder.toLowerCase() === "asc") {
@@ -27,12 +29,25 @@ const AllBlogs = ({ blogPosts }) => {
       return 0;
     }
   };
+  const limitPage = (blogs) => {
+    let blogIndex = limit * page;
+    let returnBlogs = [];
+    for (let i = 0; i < limit; i++) {
+      if (blogs[blogIndex]) {
+        returnBlogs.push(blogs[blogIndex]);
+      }
+      blogIndex++;
+    }
+    return returnBlogs;
+  };
+
   const sortedBlogPosts = blogPostsCopy.sort(compare);
+  const limitPageBlogs = limitPage(sortedBlogPosts);
   return (
     <>
       <h1>All Blogs</h1>
       <ul>
-        {sortedBlogPosts.map((blog, index) => {
+        {limitPageBlogs.map((blog, index) => {
           return (
             <li key={index}>
               <p>Id: {blog.id}</p>
